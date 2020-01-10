@@ -1,0 +1,32 @@
+{
+    "name": "marknote",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.html",
+    "scripts": {
+        "test": "echo test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rbtyang/demo-newjs.git"
+    },
+    "keywords": [
+        "nwjs",
+        "demo"
+    ],
+    "author": "robotyang",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rbtyang/demo-newjs/issues"
+    },
+    "devDependencies": {
+        "nwjs-builder-phoenix": "^1.15.0"
+    },
+    "build": {
+        "nwVersion": "0.43.4"
+    },
+    "chromium-args": "",
+    "window": {
+    },
+    "homepage": "https://github.com/rbtyang/demo-newjs#readme"
+}

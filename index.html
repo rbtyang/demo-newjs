@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title阿斯蒂芬</title>
+</head>
+
+<body style="width: 100%; height: 100%;">
+
+<p>body上右击显示上下文菜单</p>
+<p>body上右击显示上下文菜单</p>
+<p>body上右击显示上下文菜单</p>
+<p>body上右击显示上下文菜单</p>
+<p>body上右击显示上下文菜单</p>
+
+<script>
+    //获取当前窗口 --------------------------------------
+    let win = nw.Window.get();
+    let dom = document;
+    win.showDevTools(); //启动调试控制台
+
+    //使用node.js获取系统信息 --------------------------------------
+    var os = require('os');
+    console.log('robotyang debug index.html.()  line:42()  os=', os);
+    document.write('您当前系统为 ', os.platform()); //方式1
+    console.log(`您当前系统为 ${process.platform}`); //方式2
+
+    //菜单栏 --------------------------------------
+    let barMenu = new nw.Menu({type: 'menubar'});
+    var barSubMenu = new nw.Menu();
+
+    //菜单栏 子菜单
+    barSubMenu = new nw.Menu();
+    barSubMenu.append(new nw.MenuItem({
+        label: '我的'
+    }));
+    barSubMenu.append(new nw.MenuItem({
+        label: '安全'
+    }));
+    barMenu.append(new nw.MenuItem({
+        label: '账户', submenu: barSubMenu
+    }));
+
+    //菜单栏 子菜单
+    barSubMenu = new nw.Menu();
+    barSubMenu.append(new nw.MenuItem({
+        label: '基本'
+    }));
+    barSubMenu.append(new nw.MenuItem({
+        label: '仓库'
+    }));
+    barSubMenu.append(new nw.MenuItem({
+        label: '升级'
+    }));
+    barMenu.append(new nw.MenuItem({
+        label: '设置', submenu: barSubMenu
+    }));
+
+    //菜单栏 子菜单
+    barSubMenu = new nw.Menu();
+    barSubMenu.append(new nw.MenuItem({
+        label: '文档'
+    }));
+    barSubMenu.append(new nw.MenuItem({
+        label: '快捷'
+    }));
+    barSubMenu.append(new nw.MenuItem({
+        label: '社区'
+    }));
+    barSubMenu.append(new nw.MenuItem({
+        label: '作者'
+    }));
+    barMenu.append(new nw.MenuItem({
+        label: '帮助', submenu: barSubMenu
+    }));
+
+    //菜单栏 应用
+    win.menu = barMenu; //设为 null 则会移除菜单栏
+
+    //上下文菜单 --------------------------------------
+    let cttMenu = new nw.Menu();
+
+    //添加 上下文菜单项
+    cttMenu.append(new nw.MenuItem({
+        label: '新建',
+        click: function () {
+            alert('You have clicked at "项 A"');
+        }
+    }));
+    cttMenu.append(new nw.MenuItem({
+        label: '导出'
+    }));
+    cttMenu.append(new nw.MenuItem({
+        label: '分享'
+    }));
+    cttMenu.append(new nw.MenuItem({
+        type: 'separator'
+    }));
+    cttMenu.append(new nw.MenuItem({
+        label: '日志'
+    }));
+
+    //监听事件
+    dom.body.addEventListener('contextmenu', function (event) {
+        //阻止显示默认 上下文菜单
+        event.preventDefault();
+        //点击处弹出 自定义的 上下文菜单对象
+        cttMenu.popup(event.x, event.y);
+        return false;
+    }, false);
+
+    let hotKeyOpt = {
+        key : "Ctrl+Shift+Alt+Home",
+        active : function() {
+            console.log("全局快捷键: " + this.key + " 被激活.");
+        },
+        failed : function(msg) {
+            // :(, 无法注册 |key| 或未注册 |key|.
+            console.log(msg);
+        }
+    };
+    // 配置 |option| 注册应用快捷键
+    let shortcut = new nw.Shortcut(hotKeyOpt);
+    // 注册 全快捷键 即使无聚焦也可工作
+    nw.App.registerGlobalHotKey(shortcut);
+    // 注销 全局快捷键
+    // nw.App.unregisterGlobalHotKey(shortcut);
+
+    // nw.Shell.openExternal('https://github.com/nwjs/nw.js'); //默认浏览器中打开指定URL
+    // nw.Shell.openItem('C:\\Users\\rbt\\Documents\\Workspace\\Personal\\marknote\\index.html'); //默认编辑器中打开指定文件
+    // nw.Shell.showItemInFolder('C:\\Users\\rbt\\Documents\\Workspace\\Personal\\marknote\\index.html'); //文件管理器中显示指定文件所在目录
+</script>
+</body>
+</html>
+
